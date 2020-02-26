@@ -6,6 +6,7 @@ import './index.scss';
 
 import Items from './components/Items';
 import ItemPage from './components/ItemPage';
+import AddItem from './components/AddItem';
 
 const App = () => {
   
@@ -18,6 +19,7 @@ const App = () => {
         <Route exact path='/' component={Items} />
         <Route exact path='/item/:id' component={ItemPage} />
       </Switch>
+      <AddItem />
       </>
     </Router>
   )

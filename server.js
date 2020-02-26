@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const app = express();
 
@@ -25,9 +26,10 @@ const items = [
   }
 ]
 
-app.get('/api/items', (req, res) => {
-  // request to DB
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+app.get('/api/items', (req, res) => {
   res.send(items)
 })
 
@@ -47,8 +49,9 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.post('/api/items/add', (req, res) => {
-  console.log(req)
-  res.send('post request recived')
+  
+  
+  res.send(req.body)
 })
 
 app.listen(5000, () => console.log('server running on port 5000'))
