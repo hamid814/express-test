@@ -47,7 +47,8 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.post('/api/items/add', (req, res) => {
-
+  console.log(req)
+  res.send('post request recived')
 })
 
 app.listen(5000, () => console.log('server running on port 5000'))
