@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const shortid = require('shortid')
 
 const app = express();
 
@@ -26,6 +27,8 @@ const items = [
   }
 ]
 
+const badWords = ['fuck', 'bitch', 'dick']
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,9 +52,15 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.post('/api/items/add', (req, res) => {
+  items.push({id: items.length + 1, name: req.body.name})
   
-  
-  res.send(req.body)
+  if(badWords.indexOf(req.body.name) === -1) {
+    const newItem = {id: items.length + 1, name: req.body.name}
+    
+    res.send(200, newItem)
+  } else {
+    res.send(500, { error: "hi, there was an error" });
+  }
 })
 
 app.listen(5000, () => console.log('server running on port 5000'))

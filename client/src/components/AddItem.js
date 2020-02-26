@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios';
 
+import Context from '../context/Context';
+
 const AddItem = () => {
+  const { setAddedNew } = useContext(Context)
+  
   const [text, setText] = useState('test text')
   
   const onChange = e => {
@@ -9,17 +13,24 @@ const AddItem = () => {
   }
 
   const onAdd = () => {
-    axios.post('/api/items/add', {
-      name: text
-    })
-      .then(res => console.log(res.data))
+    if(text !== '') {
+      axios.post('/api/items/add', {
+        name: text
+      })
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err))
+
+      // setText('')
+
+      setAddedNew()
+    }
   }
   
   return (
     <div className="add-item-container">
       <input type="text" placeholder="add item ..." value={text} onChange={onChange} />
       <button onClick={onAdd}>
-        add
+        Add
       </button>
     </div>
   )

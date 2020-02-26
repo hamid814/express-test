@@ -8,6 +8,8 @@ import Items from './components/Items';
 import ItemPage from './components/ItemPage';
 import AddItem from './components/AddItem';
 
+import State from './context/State';
+
 const App = () => {
   
   return (
@@ -25,4 +27,12 @@ const App = () => {
   )
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const StateContainer = () => {
+  return (
+    <State>
+      <App />
+    </State>
+  )
+}
+
+ReactDOM.render(<StateContainer />, document.getElementById('root'));

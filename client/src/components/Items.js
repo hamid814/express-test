@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 
 import Item from './Item';
 
+import Context from '../context/Context';
+
 const Items = () => {
+  const { addedNew } = useContext(Context)
+  
   const [items, setItems] = useState([])
 
   useEffect(() => {
@@ -12,7 +16,8 @@ const Items = () => {
         setItems(res.data)
       })
       .catch(err => console.log(err))
-  }, [])
+
+  }, [addedNew])
   
   return (
     <div className="items-container">
