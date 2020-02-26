@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "git": "git add . && git commit -m \"dev\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "hamid",
   "license": "MIT",
   "dependencies": {
     "concurrently": "^5.1.0",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
-    "shortid": "^2.2.15"
+    "express-handlebars": "^3.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
