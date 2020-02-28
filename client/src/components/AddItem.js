@@ -18,7 +18,7 @@ const AddItem = () => {
         name: text
       })
         .then(res => console.log(res.data))
-        .catch(err => console.error(err))
+        .catch(err => console.log(err))
 
       // setText('')
 

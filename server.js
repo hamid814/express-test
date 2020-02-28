@@ -6,31 +6,30 @@ const app = express();
 
 const items = [
   {
-    id: 1,
+    id: shortid.generate(),
     name: 'chick'
   },
   {
-    id: 2,
+    id: shortid.generate(),
     name: 'paper'
   },
   {
-    id: 3,
+    id: shortid.generate(),
     name: 'tissue'
   },
   {
-    id: 4,
+    id: shortid.generate(),
     name: 'moblie'
   },
   {
-    id: 5,
+    id: shortid.generate(),
     name: 'carpet'
   }
 ]
 
-const badWords = ['fuck', 'bitch', 'dick']
+const badWords = ['fuck', 'bitch', 'dick', 'cunt', 'asshole']
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json())
 
 app.get('/api/items', (req, res) => {
   res.send(items)
@@ -39,8 +38,9 @@ app.get('/api/items', (req, res) => {
 app.get('/api/items/:id', (req, res) => {
   let msg;
   
-  if(req.params.id <= items.length) {
-    msg = items.filter(i => i.id === Number(req.params.id))[0]
+  if(items.map(i => i.id).indexOf(req.params.id) !== -1) {
+    msg = items.filter(i => i.id == req.params.id)[0]
+    // console.log(items.map(i => i.id))
   } else {
     msg = {
       type: 'error',
@@ -52,15 +52,20 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.post('/api/items/add', (req, res) => {
-  items.push({id: items.length + 1, name: req.body.name})
+  const newItem = {
+    id: shortid.generate(),
+    name: req.body.name
+  }
+  
+  items.push(newItem)
   
   if(badWords.indexOf(req.body.name) === -1) {
-    const newItem = {id: items.length + 1, name: req.body.name}
-    
     res.send(200, newItem)
   } else {
-    res.send(500, { error: "hi, there was an error" });
+    res.send('there was an error')
   }
 })
 
-app.listen(5000, () => console.log('server running on port 5000'))
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`server running on port ${PORT}`))
