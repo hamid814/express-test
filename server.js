@@ -40,7 +40,6 @@ app.get('/api/items/:id', (req, res) => {
   
   if(items.map(i => i.id).indexOf(req.params.id) !== -1) {
     msg = items.filter(i => i.id == req.params.id)[0]
-    // console.log(items.map(i => i.id))
   } else {
     msg = {
       type: 'error',
@@ -62,7 +61,7 @@ app.post('/api/items/add', (req, res) => {
   if(badWords.indexOf(req.body.name) === -1) {
     res.send(200, newItem)
   } else {
-    res.send('there was an error')
+    res.send(400, 'there was an error')
   }
 })
 
